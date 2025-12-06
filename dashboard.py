@@ -341,6 +341,7 @@ if st.sidebar.button("📥 Download SoV Report (CSV)"):
 st.markdown("---")
 st.markdown("""
     <div style='text-align: center; color: gray;'>
-        <p>Built with ❤️ for Atomberg | Powered by AI & Data Science</p>
+       
     </div>
+
 """, unsafe_allow_html=True)
