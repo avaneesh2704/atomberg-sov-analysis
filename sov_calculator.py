@@ -1,7 +1,4 @@
-"""
-Share of Voice (SoV) Calculator for Atomberg
-Custom weighted formula combining mentions, engagement, sentiment, and reach
-"""
+
 
 import pandas as pd
 import numpy as np
@@ -9,9 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, List
 
-# ============================================
-# SOV CALCULATOR
-# ============================================
+
 class ShareOfVoiceCalculator:
     def __init__(self, 
                  mention_weight=0.35,
@@ -239,7 +234,7 @@ class ShareOfVoiceCalculator:
         # Calculate SoV
         sov_results = self.calculate_sov(df, target_brand)
         
-        print(f"📊 Overall SoV Score: {sov_results['sov_score']:.2f}%\n")
+        print(f" Overall SoV Score: {sov_results['sov_score']:.2f}%\n")
         
         print("Component Breakdown:")
         print(f"  • Mention Share:     {sov_results['components']['mention_share']:.2f}% (weight: {self.weights['mention']:.0%})")
@@ -248,17 +243,17 @@ class ShareOfVoiceCalculator:
         print(f"  • Reach Share:       {sov_results['components']['reach_share']:.2f}% (weight: {self.weights['reach']:.0%})")
         
         # All brands comparison
-        print("\n\n🏆 Competitive Landscape:")
+        print("\n\n Competitive Landscape:")
         all_brands_sov = self.calculate_all_brands_sov(df)
         print(all_brands_sov.to_string(index=False))
         
         # Platform breakdown
-        print("\n\n📱 Platform-wise Performance:")
+        print("\n\n Platform-wise Performance:")
         platform_analysis = self._analyze_by_platform(df, target_brand)
         print(platform_analysis.to_string(index=False))
         
         # Sentiment breakdown
-        print("\n\n😊 Sentiment Analysis:")
+        print("\n\n Sentiment Analysis:")
         sentiment_analysis = self._analyze_sentiment_breakdown(df, target_brand)
         print(sentiment_analysis.to_string(index=False))
         
@@ -298,9 +293,6 @@ class ShareOfVoiceCalculator:
         })
 
 
-# ============================================
-# VISUALIZATION GENERATOR
-# ============================================
 class SoVVisualizer:
     @staticmethod
     def plot_sov_comparison(all_brands_df, save_path='sov_comparison.png'):
@@ -320,7 +312,7 @@ class SoVVisualizer:
         plt.tight_layout()
         
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        print(f"📊 Saved: {save_path}")
+        print(f" Saved: {save_path}")
         plt.close()
     
     @staticmethod
@@ -350,29 +342,27 @@ class SoVVisualizer:
         ax.set_title(f"Atomberg SoV Components", fontsize=14, fontweight='bold', pad=20)
         
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        print(f"📊 Saved: {save_path}")
+        print(f" Saved: {save_path}")
         plt.close()
 
 
-# ============================================
-# USAGE EXAMPLE
-# ============================================
+
 if __name__ == "__main__":
     import os
     import ast
     
     # Check if input file exists
     if not os.path.exists('analyzed_social_data.csv'):
-        print("❌ Error: analyzed_social_data.csv not found!")
+        print(" Error: analyzed_social_data.csv not found!")
         print("   Please run analyzer.py first.")
         exit(1)
     
     print("\n" + "="*60)
-    print("📊 ATOMBERG SOV AGENT - SOV CALCULATION")
+    print(" ATOMBERG SOV AGENT - SOV CALCULATION")
     print("="*60)
     
     # Load analyzed data
-    print("\n📂 Loading analyzed data...")
+    print("\n Loading analyzed data...")
     df = pd.read_csv('analyzed_social_data.csv')
     
     # Parse detected_brands back to list (if saved as string)
@@ -391,21 +381,20 @@ if __name__ == "__main__":
     print("="*60)
     
     # Create visualizations
-    print("\n📊 Generating visualizations...")
+    print("\n Generating visualizations...")
     visualizer = SoVVisualizer()
     visualizer.plot_sov_comparison(all_brands)
     visualizer.plot_component_breakdown(sov_results)
     
     # Save results
-    print("\n💾 Saving final results...")
+    print("\n Saving final results...")
     all_brands.to_csv('sov_results.csv', index=False)
-    print("   ✅ sov_results.csv")
-    print("   ✅ sov_comparison.png")
-    print("   ✅ sov_components.png")
+    print("   sov_results.csv")
+    print("    sov_comparison.png")
+    print("    sov_components.png")
     
     print("\n" + "="*60)
-    print("🎉 SOV ANALYSIS COMPLETE!")
+    print(" SOV ANALYSIS COMPLETE!")
     print("="*60)
-    print("\n🚀 Next step: Launch dashboard")
+    print("\n Next step: Launch dashboard")
     print("   → streamlit run dashboard.py")
-    print("\n📊 Or view the PNG visualizations directly!")
