@@ -1,4 +1,4 @@
-# 🔍 Atomberg Share of Voice (SoV) Analysis Agent  
+# Atomberg Share of Voice (SoV) Analysis Agent  
 
 **Developer:** Avaneesh Ingale  
 **Technologies:** Python · Streamlit · NLP · TextBlob · APIFY · YouTube API 
