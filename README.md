@@ -1,7 +1,7 @@
 # 🔍 Atomberg Share of Voice (SoV) Analysis Agent  
 
 **Developer:** Avaneesh Ingale  
-**Technologies:** Python · Streamlit · NLP · TextBlob · APIFY · YouTube API · SerpAPI
+**Technologies:** Python · Streamlit · NLP · TextBlob · APIFY · YouTube API 
 
 ---
 
@@ -55,9 +55,9 @@ Includes:
 
 ### **3️⃣ Custom Share of Voice Formula (SoV Score™)**
 
-\[
-\text{SoV} = 0.35M + 0.30E + 0.25S + 0.10R
-\]
+
+SoV = 0.35M + 0.30E + 0.25S + 0.10R
+
 
 Where:
 
@@ -91,25 +91,25 @@ Built using **Streamlit**, the dashboard includes:
 
        ┌─────────────────────────────────┐
        │         Data Collection          │
-       │ YouTube | Instagram | Twitter | Google  │
+       │ YouTube | Instagram | Twitter | Google│
        └─────────────────────────────────┘
                        │
                        ▼
        ┌─────────────────────────────────┐
        │        Processing Layer          │
-       │ Brand Detection | Sentiment | Engagement │
+       │ Brand Detection | Sentiment | Engagement│
        └─────────────────────────────────┘
                        │
                        ▼
        ┌─────────────────────────────────┐
        │        SoV Calculation Engine    │
-       │  Weighted Formula (MS, ES, SS, RS) │
+       │  Weighted Formula (MS, ES, SS, RS)│
        └─────────────────────────────────┘
                        │
                        ▼
        ┌─────────────────────────────────┐
        │        Streamlit Dashboard       │
-       │ Charts | Tables | Insights | Export │
+       │ Charts | Tables | Insights | Export│
        └─────────────────────────────────┘
 ## ⚙️ Installation & Local Setup
 1. Clone the repository
