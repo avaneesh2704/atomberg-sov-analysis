@@ -1,7 +1,4 @@
-"""
-Brand Detection & Sentiment Analysis for SoV Calculation
-Identifies brands, analyzes sentiment, and extracts insights
-"""
+
 
 import pandas as pd
 import re
@@ -10,12 +7,10 @@ from textblob import TextBlob
 from transformers import pipeline
 import numpy as np
 
-# ============================================
-# BRAND DETECTOR
-# ============================================
+
 class BrandDetector:
     def __init__(self):
-        # Define brand variations and keywords
+        # Define brand  and keywords
         self.brands = {
             'Atomberg': ['atomberg', 'atom berg', 'gorilla fan'],
             'Havells': ['havells', 'havell'],
@@ -59,9 +54,7 @@ class BrandDetector:
         return brands[0]  # Return first detected brand
 
 
-# ============================================
-# SENTIMENT ANALYZER
-# ============================================
+
 class SentimentAnalyzer:
     def __init__(self, use_transformer=False):
         self.use_transformer = use_transformer
@@ -127,9 +120,7 @@ class SentimentAnalyzer:
             return self.analyze_sentiment_simple(text)
 
 
-# ============================================
-# CONTENT ANALYZER (combines brand + sentiment)
-# ============================================
+
 class ContentAnalyzer:
     def __init__(self, use_advanced_sentiment=False):
         self.brand_detector = BrandDetector()
@@ -137,7 +128,7 @@ class ContentAnalyzer:
     
     def analyze_content(self, df):
         """Analyze entire dataframe of social media content"""
-        print("🔍 Analyzing content...")
+        print(" Analyzing content...")
         
         # Determine text column based on platform
         def get_text(row):
@@ -153,23 +144,23 @@ class ContentAnalyzer:
         df['full_text'] = df.apply(get_text, axis=1)
         
         # Detect brands
-        print("  🏷️  Detecting brands...")
+        print("    Detecting brands...")
         df['detected_brands'] = df['full_text'].apply(self.brand_detector.detect_brands)
         df['brand_count'] = df['detected_brands'].apply(len)
         df['primary_brand'] = df['full_text'].apply(self.brand_detector.get_primary_brand)
         df['mentions_atomberg'] = df['detected_brands'].apply(lambda x: 'Atomberg' in x)
         
         # Analyze sentiment
-        print("  😊 Analyzing sentiment...")
+        print("   Analyzing sentiment...")
         sentiments = df['full_text'].apply(self.sentiment_analyzer.analyze)
         df['sentiment'] = sentiments.apply(lambda x: x['sentiment'])
         df['sentiment_score'] = sentiments.apply(lambda x: x['score'])
         
         # Calculate engagement metrics
-        print("  📊 Calculating engagement...")
+        print("   Calculating engagement...")
         df['total_engagement'] = self._calculate_engagement(df)
         
-        print(f"✅ Analysis complete! Processed {len(df)} items")
+        print(f" Analysis complete! Processed {len(df)} items")
         return df
     
     def _calculate_engagement(self, df):
@@ -229,29 +220,27 @@ class ContentAnalyzer:
         return summary
 
 
-# ============================================
-# USAGE EXAMPLE
-# ============================================
+
 if __name__ == "__main__":
     import os
     
     # Check if input file exists
     if not os.path.exists('social_media_data.csv'):
-        print("❌ Error: social_media_data.csv not found!")
+        print(" Error: social_media_data.csv not found!")
         print("   Please run scraper.py first to collect data.")
         exit(1)
     
     print("\n" + "="*60)
-    print("🧠 ATOMBERG SOV AGENT - CONTENT ANALYSIS")
+    print("ATOMBERG SOV AGENT - CONTENT ANALYSIS")
     print("="*60 + "\n")
     
     # Load scraped data
-    print("📂 Loading data...")
+    print(" Loading data...")
     df = pd.read_csv('social_media_data.csv')
     print(f"   Loaded {len(df)} posts from {df['platform'].nunique()} platforms")
     
     # Initialize analyzer
-    print("\n🔧 Initializing analyzer...")
+    print("\n Initializing analyzer...")
     analyzer = ContentAnalyzer(use_advanced_sentiment=False)  # Set True for better accuracy
     print("   Using TextBlob for fast sentiment analysis")
     
@@ -261,15 +250,12 @@ if __name__ == "__main__":
     # Get brand summary
     print("\n" + "="*60)
     brand_summary = analyzer.get_brand_summary(analyzed_df)
-    print("\n📊 Brand Summary:")
+    print("\n Brand Summary:")
     print(brand_summary)
     print("="*60)
     
     # Save analyzed data
-    print("\n💾 Saving results...")
+    print("\n Saving results...")
     analyzed_df.to_csv('analyzed_social_data.csv', index=False)
     brand_summary.to_csv('brand_summary.csv')
     
-    print("   ✅ analyzed_social_data.csv")
-    print("   ✅ brand_summary.csv")
-    print("\n✅ Analysis complete! Next step: Run sov_calculator.py")
