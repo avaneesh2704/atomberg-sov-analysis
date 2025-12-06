@@ -1,151 +1,118 @@
-#  Atomberg Share of Voice (SoV) Analysis Agent
-AI-powered Social Listening & Competitor Intelligence System
+# 🔍 Atomberg Share of Voice (SoV) Analysis Agent  
+### *AI-powered Social Listening & Competitor Intelligence System*
 
-Developer: Avaneesh Ingale
+**Developer:** Avaneesh Ingale  
+**Technologies:** Python · Streamlit · NLP · TextBlob · APIFY · YouTube API · SerpAPI
 
-Technologies: Python, Streamlit, NLP, Transformers, APIFY, YouTube API
+---
 
-Overview
+## 📌 Overview  
 
-This project builds an AI-powered Share of Voice (SoV) intelligence system designed for the smart fan market, focusing on Atomberg and its competitors (Havells, Crompton, Orient, Polycab, Usha, etc.).
+This project builds an **AI-powered Share of Voice (SoV) Intelligence System** designed for the **Smart Fan market**, analyzing Atomberg’s visibility relative to key competitors such as **Havells, Crompton, Orient, Polycab, and Usha**.
 
-The system collects data from YouTube, Instagram, Twitter, and Google Search, analyzes:
+The system collects content from **YouTube, Instagram, Twitter/X, and Google Search**, runs sentiment & engagement analysis, and computes a **weighted Share of Voice score** using a custom formula.
 
-Brand mentions
+The output includes:
 
-Customer sentiment
+- ✔ Interactive Streamlit Dashboard  
+- ✔ Brand-wise SoV Ranking  
+- ✔ Sentiment & Engagement Insights  
+- ✔ Platform-wise Performance  
+- ✔ Competitor Benchmarking  
+- ✔ Strategic Recommendations  
 
-Engagement
+---
 
-Reach
+## 🚀 Key Features
 
-Keyword performance
+### **1️⃣ Multi-Platform Data Collection**
+Scrapes data from:
 
-and calculates a weighted Share of Voice score using a custom SoV formula.
+- **YouTube Data API v3**
+- **Instagram via Apify Hashtag Scraper**
+- **Twitter/X via snscrape / Apify Actor**
+- **Google Search via SerpAPI**
 
-The final output includes:
+Supports multiple keywords:
 
-✔ Interactive dashboard
-✔ SoV ranking
-✔ Sentiment analysis
-✔ Platform-wise breakdown
-✔ Competitor benchmarking
-✔ Strategic recommendations
+- `"smart fan"`
+- `"BLDC fan"`
+- `"energy efficient fan"`
+- `"ceiling fan with remote"`
+- `"Atomberg vs Havells"`
 
-# Key Features
-1. Multi-Platform Data Collection
+---
 
-Scrapes content from:
-
-YouTube Data API
-
-Instagram (Apify Hashtag Scraper)
-
-Twitter/X (snscrape or Apify Actor)
-
-Google Search (SerpAPI)
-
-Supports multi-keyword analysis:
-
-“smart fan”
-
-“BLDC fan”
-
-“energy efficient fan”
-
-“ceiling fan with remote”
-
-“Atomberg vs Havells”
-
-2. Intelligent Analysis Engine
-
+### **2️⃣ Intelligent Analysis Engine**
 Includes:
 
-Brand detection using regex + pattern matching
+- Brand detection using **regex + pattern matching**
+- Sentiment analysis using **TextBlob**
+- Platform-specific **engagement scoring**
+- Custom **Share of Voice (SoV) calculation**
+- Data normalization & classification
 
-Sentiment analysis (TextBlob + Transformer model)
+---
 
-Platform-specific engagement scoring
+### **3️⃣ Custom Share of Voice Formula (SoV Score™)**
 
-Weighted SoV calculation
-
-3. Custom Share of Voice (SoV) Formula
-𝑆
-𝑜
-𝑉
-=
-0.35
-𝑀
-+
-0.30
-𝐸
-+
-0.25
-𝑆
-+
-0.10
-𝑅
-SoV=0.35M+0.30E+0.25S+0.10R
+\[
+\text{SoV} = 0.35M + 0.30E + 0.25S + 0.10R
+\]
 
 Where:
 
-M = Mention Share
+| Component | Meaning | Weight |
+|----------|---------|--------|
+| **M** | Mention Share | 35% |
+| **E** | Engagement Share | 30% |
+| **S** | Sentiment Share | 25% |
+| **R** | Reach Share | 10% |
 
-E = Engagement Share
+This ensures a balanced view of **visibility**, **interaction quality**, **brand perception**, and **audience reach**.
 
-S = Sentiment Share
+---
 
-R = Reach Share
+## 📊 Interactive Dashboard
 
-This formula balances visibility, interaction quality, perception, and audience size.
+Built using **Streamlit**, the dashboard includes:
 
-4. Visual & Interactive Dashboard
+- SoV score & brand ranking  
+- Mentions, engagement & sentiment insights  
+- Platform breakdown (YouTube, Instagram, Twitter, Google)  
+- Radar chart of SoV components  
+- Brand comparison visuals  
+- Downloadable data tables  
 
-Built using Streamlit with:
+> The dashboard can be deployed on **Streamlit Cloud** and shared via a public URL.
 
-SoV score & brand ranking
+---
 
-Mention, engagement, sentiment insights
+## 🧱 System Architecture
 
-Platform breakdown
-
-Radar chart of SoV components
-
-Competitor comparison charts
-
-Data tables and downloadable reports
-
-System Architecture
-Keywords → Scrapers (YouTube, Instagram/APIFY, Twitter/snscrape, Google/SerpAPI)
-         ↓
-      Data Processing (Brand Detection, NLP, Engagement Scoring)
-         ↓
-      SoV Engine (Weighted Formula for MS, ES, SS, RS)
-         ↓
-     Streamlit Dashboard (Charts, Tables, Insights)
-
-Repository Structure
-├── scraper.py              # Collects data from all platforms
-├── analyzer.py             # Sentiment + brand detection + engagement
-├── sov_calculator.py       # SoV formula & component breakdown
-├── dashboard.py            # Streamlit UI
-├── requirements.txt        # Dependencies
-├── README.md               # Project documentation
-└── .streamlit/
-     └── secrets.toml       # API keys (not pushed to GitHub)
-
-API Keys Required
-
-Create .streamlit/secrets.toml:
-
-YOUTUBE_API_KEY = "your_key"
-APIFY_TOKEN = "your_token"
-
-
-
-These are automatically loaded inside Streamlit Cloud.
-
-# Installation & Local Setup
+       ┌─────────────────────────────────┐
+       │         Data Collection          │
+       │ YouTube | Instagram | Twitter | Google  │
+       └─────────────────────────────────┘
+                       │
+                       ▼
+       ┌─────────────────────────────────┐
+       │        Processing Layer          │
+       │ Brand Detection | Sentiment | Engagement │
+       └─────────────────────────────────┘
+                       │
+                       ▼
+       ┌─────────────────────────────────┐
+       │        SoV Calculation Engine    │
+       │  Weighted Formula (MS, ES, SS, RS) │
+       └─────────────────────────────────┘
+                       │
+                       ▼
+       ┌─────────────────────────────────┐
+       │        Streamlit Dashboard       │
+       │ Charts | Tables | Insights | Export │
+       └─────────────────────────────────┘
+## ⚙️ Installation & Local Setup
 1. Clone the repository
 git clone https://github.com/yourusername/atomberg-sov.git
 cd atomberg-sov
@@ -155,9 +122,9 @@ pip install -r requirements.txt
 
 3. Add API keys
 
-Create .streamlit/secrets.toml and add required keys.
+Create .streamlit/secrets.toml and paste your keys.
 
-4. Run the pipeline
+4. Run the full pipeline
 python scraper.py
 python analyzer.py
 python sov_calculator.py
