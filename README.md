@@ -3,9 +3,9 @@
 **Developer:** Avaneesh Ingale  
 **Technologies:** Python · Streamlit · NLP · TextBlob · APIFY · YouTube API 
 
-*Demo Video:* https://drive.google.com/file/d/1V6MO5hbYCWmfQd0y8a052WcePinDJvNL/view?usp=sharing
+Demo Video:https://drive.google.com/file/d/1V6MO5hbYCWmfQd0y8a052WcePinDJvNL/view?usp=sharing
 
-*Demo:* https://atombergsovagent.streamlit.app/
+Live Dashboard: https://atombergsovagent.streamlit.app/
 ---
 
 ## 📌 Overview  
