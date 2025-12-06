@@ -1,8 +1,4 @@
-"""
-Multi-Platform Social Media Scraper for SoV Analysis
-ENHANCED VERSION: Added Google Search (4 platforms total)
-YouTube: Google Cloud API | Twitter, Instagram, Google: Apify
-"""
+
 
 import pandas as pd
 import json
@@ -14,9 +10,7 @@ import streamlit as st
 # Load environment variables from .env file
 load_dotenv()
 
-# ============================================
-# YOUTUBE SCRAPER (using YouTube Data API v3)
-# ============================================
+
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -24,20 +18,20 @@ class YouTubeScraper:
     def __init__(self, api_key):
         self.api_key = api_key
         if not api_key or api_key == "YOUR_YOUTUBE_API_KEY":
-            print("⚠️  YouTube API key not set properly!")
+            print("  YouTube API key not set properly!")
             self.youtube = None
         else:
             try:
                 self.youtube = build('youtube', 'v3', developerKey=api_key)
-                print("✅ YouTube API initialized successfully")
+                print(" YouTube API initialized successfully")
             except Exception as e:
-                print(f"❌ YouTube API initialization failed: {e}")
+                print(f" YouTube API initialization failed: {e}")
                 self.youtube = None
         
     def search_videos(self, query, max_results=20):
         """Search for videos and get detailed stats"""
         if not self.youtube:
-            print("⚠️  Skipping YouTube (API not configured)")
+            print("  Skipping YouTube (API not configured)")
             return pd.DataFrame()
             
         try:
@@ -84,43 +78,41 @@ class YouTubeScraper:
             
         except HttpError as e:
             print(f"   YouTube API Error: {e}")
-            print("   💡 Check your API key in .env file")
+            print("    Check your API key in .env file")
             return pd.DataFrame()
         except Exception as e:
             print(f"   YouTube Error: {e}")
             return pd.DataFrame()
 
 
-# ============================================
-# X/TWITTER SCRAPER (Using Apify: apidojo/tweet-scraper)
-# ============================================
+
 try:
     from apify_client import ApifyClient
     APIFY_AVAILABLE = True
 except ImportError:
     APIFY_AVAILABLE = False
-    print("⚠️  apify-client not installed")
+    print(" apify-client not installed")
 
 class TwitterScraper:
     def __init__(self, apify_token):
         self.client = None
         if not APIFY_AVAILABLE:
-            print("⚠️  apify-client not installed. Twitter scraping disabled.")
+            print("  apify-client not installed. Twitter scraping disabled.")
             return
 
         if not apify_token or apify_token == "YOUR_APIFY_TOKEN":
-            print("⚠️  Apify token not set - Twitter scraping disabled")
+            print("  Apify token not set - Twitter scraping disabled")
         else:
             try:
                 self.client = ApifyClient(apify_token)
-                print("✅ Twitter/Apify initialized successfully")
+                print(" Twitter/Apify initialized successfully")
             except Exception as e:
-                print(f"❌ Apify initialization failed for Twitter: {e}")
+                print(f" Apify initialization failed for Twitter: {e}")
 
     def search_tweets(self, query, max_results=50):
         """Search tweets using Apify"""
         if not self.client:
-            print("⚠️  Skipping Twitter (Apify not configured)")
+            print("  Skipping Twitter (Apify not configured)")
             return pd.DataFrame()
 
         try:
@@ -135,7 +127,7 @@ class TwitterScraper:
             run = self.client.actor("apidojo/tweet-scraper").call(run_input=run_input)
             
             if not run:
-                print("   ⚠️  Twitter scraper failed to start")
+                print("     Twitter scraper failed to start")
                 return pd.DataFrame()
 
             # Fetch results
@@ -166,33 +158,31 @@ class TwitterScraper:
             return pd.DataFrame()
 
 
-# ============================================
-# INSTAGRAM SCRAPER (using Apify API)
-# ============================================
+
 class InstagramScraper:
     def __init__(self, apify_token):
         self.apify_token = apify_token
         
         if not APIFY_AVAILABLE:
-            print("⚠️  Apify client not available")
+            print("  Apify client not available")
             self.client = None
             return
             
         if not apify_token or apify_token == "YOUR_APIFY_TOKEN":
-            print("⚠️  Apify token not set - Instagram scraping disabled")
+            print("  Apify token not set - Instagram scraping disabled")
             self.client = None
         else:
             try:
                 self.client = ApifyClient(apify_token)
-                print("✅ Instagram/Apify initialized successfully")
+                print(" Instagram/Apify initialized successfully")
             except Exception as e:
-                print(f"❌ Apify initialization failed: {e}")
+                print(f" Apify initialization failed: {e}")
                 self.client = None
         
     def search_posts(self, hashtag, max_results=30):
         """Search Instagram posts by hashtag"""
         if not self.client:
-            print("   ⚠️  Skipping Instagram (Apify not configured)")
+            print("     Skipping Instagram (Apify not configured)")
             return pd.DataFrame()
             
         try:
@@ -227,29 +217,26 @@ class InstagramScraper:
             return pd.DataFrame()
 
 
-# ============================================
-# GOOGLE SEARCH SCRAPER (FIXED VERSION)
-# ============================================
-# Copy this entire class and REPLACE the GoogleSearchScraper class in your scraper.py
+
 
 class GoogleSearchScraper:
     def __init__(self, apify_token):
         self.apify_token = apify_token
         
         if not APIFY_AVAILABLE:
-            print("⚠️  Apify client not available")
+            print("  Apify client not available")
             self.client = None
             return
             
         if not apify_token or apify_token == "YOUR_APIFY_TOKEN":
-            print("⚠️  Apify token not set - Google Search scraping disabled")
+            print("  Apify token not set - Google Search scraping disabled")
             self.client = None
         else:
             try:
                 self.client = ApifyClient(apify_token)
-                print("✅ Google Search/Apify initialized successfully")
+                print(" Google Search/Apify initialized successfully")
             except Exception as e:
-                print(f"❌ Apify initialization failed: {e}")
+                print(f" Apify initialization failed: {e}")
                 self.client = None
     
     def search_google(self, query, max_results=15, country_code='in'):  # FIXED: lowercase 'in'
@@ -262,7 +249,7 @@ class GoogleSearchScraper:
             country_code: Country for localized results (default 'in' for India)
         """
         if not self.client:
-            print("   ⚠️  Skipping Google Search (Apify not configured)")
+            print("     Skipping Google Search (Apify not configured)")
             return pd.DataFrame()
         
         try:
@@ -331,13 +318,11 @@ class GoogleSearchScraper:
             
         except Exception as e:
             print(f"   Google Search error: {str(e)[:150]}")
-            print("   💡 Tip: Check Apify quota or reduce max_results")
+            
             return pd.DataFrame()
 
 
-# ============================================
-# UNIFIED SCRAPER ORCHESTRATOR - ENHANCED
-# ============================================
+
 class MultiPlatformScraper:
     def __init__(self, youtube_api_key=None, apify_token=None, include_google=True):
         """
@@ -363,7 +348,7 @@ class MultiPlatformScraper:
             self.google and self.google.client is not None
         ])
         
-        print(f"\n✅ {active_platforms} platform(s) ready for scraping")
+        print(f"\n {active_platforms} platform(s) ready for scraping")
         print()  # Blank line for readability
         
     def scrape_all_platforms(self, query, youtube_n=20, twitter_n=50, instagram_n=30, google_n=15):
@@ -378,19 +363,19 @@ class MultiPlatformScraper:
             yt_data = self.youtube.search_videos(query, youtube_n)
             if not yt_data.empty:
                 all_data.append(yt_data)
-                print(f"   ✅ Found {len(yt_data)} videos")
+                print(f"    Found {len(yt_data)} videos")
             else:
-                print(f"   ⚠️  No YouTube data collected")
+                print(f"     No YouTube data collected")
         
         # Twitter
         if self.twitter.client:
-            print("🐦 Scraping Twitter/X...")
+            print(" Scraping Twitter/X...")
             tw_data = self.twitter.search_tweets(query, twitter_n)
             if not tw_data.empty:
                 all_data.append(tw_data)
-                print(f"   ✅ Found {len(tw_data)} tweets")
+                print(f"    Found {len(tw_data)} tweets")
             else:
-                print(f"   ⚠️  No Twitter data collected")
+                print(f"     No Twitter data collected")
         
         # Instagram
         if self.instagram and self.instagram.client:
@@ -399,9 +384,9 @@ class MultiPlatformScraper:
             ig_data = self.instagram.search_posts(hashtag, instagram_n)
             if not ig_data.empty:
                 all_data.append(ig_data)
-                print(f"   ✅ Found {len(ig_data)} posts")
+                print(f"    Found {len(ig_data)} posts")
             else:
-                print(f"   ⚠️  No Instagram data collected")
+                print(f"     No Instagram data collected")
         
         # Google Search - NEW!
         if self.google and self.google.client:
@@ -409,19 +394,19 @@ class MultiPlatformScraper:
             google_data = self.google.search_google(query, google_n)
             if not google_data.empty:
                 all_data.append(google_data)
-                print(f"   ✅ Found {len(google_data)} results")
+                print(f"    Found {len(google_data)} results")
             else:
-                print(f"   ⚠️  No Google data collected")
+                print(f"     No Google data collected")
         
         # Combine all data
         if not all_data:
-            print("\n❌ ERROR: No data collected from any platform!")
+            print("\n ERROR: No data collected from any platform!")
             print("   Please check your API keys and try again.")
             return pd.DataFrame()
         
         combined_df = pd.concat(all_data, ignore_index=True)
         
-        print(f"\n✅ Total results scraped: {len(combined_df)}")
+        print(f"\n Total results scraped: {len(combined_df)}")
         return combined_df
     
     def scrape_multiple_keywords(self, keywords):
@@ -439,11 +424,11 @@ class MultiPlatformScraper:
                 result['search_keyword'] = keyword
                 all_results.append(result)
             else:
-                print(f"⚠️  No data for keyword: {keyword}")
+                print(f"  No data for keyword: {keyword}")
             
             # Rate limiting between searches (important for Apify)
             if i < len(keywords):
-                print("\n⏳ Waiting 5 seconds before next search...")
+                print("\n Waiting 5 seconds before next search...")
                 time.sleep(5)  # Increased from 3 to 5 for Google Search
         
         if not all_results:
@@ -454,12 +439,10 @@ class MultiPlatformScraper:
         return pd.concat(all_results, ignore_index=True)
 
 
-# ============================================
-# USAGE EXAMPLE
-# ============================================
+
 if __name__ == "__main__":
     print("="*60)
-    print("🌀 ATOMBERG SOV AGENT - DATA COLLECTION (4 PLATFORMS)")
+    print(" ATOMBERG SOV AGENT - DATA COLLECTION (4 PLATFORMS)")
     print("="*60)
     
     # Load API keys from environment
@@ -472,13 +455,13 @@ if __name__ == "__main__":
         print("❌ YouTube API key not found or invalid!")
         print("   Add it to .env file: YOUTUBE_API_KEY=your_actual_key")
     else:
-        print(f"✅ YouTube API key loaded: {youtube_key[:15]}...")
+        print(f" YouTube API key loaded: {youtube_key[:15]}...")
     
     if not apify_token or apify_token == "YOUR_APIFY_TOKEN":
-        print("⚠️  Apify token not found (Twitter, Instagram & Google will be skipped)")
+        print("  Apify token not found (Twitter, Instagram & Google will be skipped)")
         print("   Add it to .env file: APIFY_TOKEN=your_token")
     else:
-        print(f"✅ Apify token loaded: {apify_token[:15]}...")
+        print(f" Apify token loaded: {apify_token[:15]}...")
     
     # Ask user if they want to include Google
     print("\n" + "="*60)
@@ -505,14 +488,14 @@ if __name__ == "__main__":
     # keywords = ["smart fan"]
     
     # Scrape all platforms for all keywords
-    print(f"\n📋 Will search for {len(keywords)} keywords")
-    print(f"⏱️  Estimated time: {len(keywords) * 2} minutes\n")
+    print(f"\n Will search for {len(keywords)} keywords")
+    print(f"  Estimated time: {len(keywords) * 2} minutes\n")
     
     data = scraper.scrape_multiple_keywords(keywords)
     
     if data.empty:
         print("\n" + "="*60)
-        print("❌ NO DATA COLLECTED")
+        print(" NO DATA COLLECTED")
         print("="*60)
     else:
         # Save to CSV
@@ -520,15 +503,16 @@ if __name__ == "__main__":
         data.to_csv(output_file, index=False)
         
         print("\n" + "="*60)
-        print("✅ SUCCESS!")
+        print(" SUCCESS!")
         print("="*60)
-        print(f"\n💾 Data saved to: {output_file}")
-        print(f"📊 Total rows: {len(data)}")
-        print(f"📱 Platforms: {data['platform'].unique().tolist()}")
-        print(f"🔑 Keywords: {data['search_keyword'].unique().tolist()}")
+        print(f"\n Data saved to: {output_file}")
+        print(f" Total rows: {len(data)}")
+        print(f" Platforms: {data['platform'].unique().tolist()}")
+        print(f" Keywords: {data['search_keyword'].unique().tolist()}")
         
         # Show platform breakdown
-        print("\n📊 Platform Breakdown:")
+        print("\n Platform Breakdown:")
         print(data['platform'].value_counts().to_string())
         
-        print("\n✅ Next step: Run analyzer.py")
+
+     
