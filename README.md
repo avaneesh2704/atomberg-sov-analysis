@@ -1,5 +1,4 @@
 # 🔍 Atomberg Share of Voice (SoV) Analysis Agent  
-### *AI-powered Social Listening & Competitor Intelligence System*
 
 **Developer:** Avaneesh Ingale  
 **Technologies:** Python · Streamlit · NLP · TextBlob · APIFY · YouTube API · SerpAPI
