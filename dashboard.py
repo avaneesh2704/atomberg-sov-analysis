@@ -55,7 +55,7 @@ df, sov_df = load_data()
 
 
 st.sidebar.image("https://via.placeholder.com/200x80/FF6B6B/FFFFFF?text=Atomberg", use_container_width=True)
-st.sidebar.title("🔍 Analysis Filters")
+st.sidebar.title(" Analysis Filters")
 
 # Brand filter
 selected_brands = st.sidebar.multiselect(
@@ -200,7 +200,7 @@ st.plotly_chart(fig_components, use_container_width=True)
 st.markdown("---")
 
 # Row 3: Platform Analysis
-st.subheader("📱 Platform-wise Performance")
+st.subheader(" Platform-wise Performance")
 
 col1, col2 = st.columns(2)
 
@@ -331,6 +331,7 @@ st.markdown("""
     </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
