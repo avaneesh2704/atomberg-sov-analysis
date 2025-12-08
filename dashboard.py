@@ -48,7 +48,7 @@ def load_data():
         
         return analyzed_df, sov_results
     except FileNotFoundError:
-        st.error("⚠️ Data files not found! Please run the scraper and analyzer first.")
+        st.error("Data files not found! Please run the scraper and analyzer first.")
         st.stop()
 
 df, sov_df = load_data()
@@ -82,7 +82,7 @@ selected_sentiments = st.sidebar.multiselect(
 
 # Date range (if available)
 st.sidebar.markdown("---")
-st.sidebar.markdown("### 📊 Data Summary")
+st.sidebar.markdown("### Data Summary")
 st.sidebar.metric("Total Posts Analyzed", len(df))
 st.sidebar.metric("Brands Detected", len(sov_df))
 st.sidebar.metric("Platforms Covered", len(platforms))
@@ -90,7 +90,7 @@ st.sidebar.metric("Platforms Covered", len(platforms))
 
 
 # Header
-st.markdown('<div class="main-header">🌀 Atomberg Share of Voice Analysis</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header"> Atomberg Share of Voice Analysis</div>', unsafe_allow_html=True)
 st.markdown("---")
 
 # Key Metrics Row
@@ -133,7 +133,7 @@ st.markdown("---")
 
 
 # Row 1: SoV Comparison
-st.subheader("📊 Share of Voice Comparison")
+st.subheader(" Share of Voice Comparison")
 
 col1, col2 = st.columns([2, 1])
 
@@ -169,7 +169,7 @@ with col2:
 st.markdown("---")
 
 # Row 2: Component Breakdown
-st.subheader("🎯 SoV Component Breakdown")
+st.subheader(" SoV Component Breakdown")
 
 filtered_sov_components = filtered_sov[['brand', 'mention_share', 'engagement_share', 'sentiment_share', 'reach_share']]
 
@@ -260,7 +260,7 @@ with col2:
 st.markdown("---")
 
 # Row 4: Sentiment Analysis
-st.subheader("😊 Sentiment Analysis")
+st.subheader(" Sentiment Analysis")
 
 col1, col2 = st.columns(2)
 
@@ -305,7 +305,7 @@ with col2:
 st.markdown("---")
 
 # Row 5: Data Table
-st.subheader("📋 Detailed Brand Comparison")
+st.subheader(" Detailed Brand Comparison")
 st.dataframe(
     filtered_sov.style.highlight_max(subset=['sov_score'], color='lightgreen'),
     use_container_width=True
@@ -314,7 +314,7 @@ st.dataframe(
 
 st.sidebar.markdown("### 💾 Export Options")
 
-if st.sidebar.button("📥 Download SoV Report (CSV)"):
+if st.sidebar.button(" Download SoV Report (CSV)"):
     csv = filtered_sov.to_csv(index=False)
     st.sidebar.download_button(
         label="Download CSV",
@@ -331,5 +331,6 @@ st.markdown("""
     </div>
 
 """, unsafe_allow_html=True)
+
 
 
