@@ -10,7 +10,7 @@ import ast
 # Page config
 st.set_page_config(
     page_title="Atomberg SoV Analysis",
-    page_icon="🌀",
+    page_icon="",
     layout="wide"
 )
 
@@ -331,4 +331,5 @@ st.markdown("""
     </div>
 
 """, unsafe_allow_html=True)
+
 
