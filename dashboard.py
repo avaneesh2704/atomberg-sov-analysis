@@ -1,7 +1,4 @@
-"""
-Streamlit Interactive Dashboard for Atomberg SoV Analysis
-Run with: streamlit run dashboard.py
-"""
+
 
 import streamlit as st
 import pandas as pd
@@ -36,9 +33,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ============================================
-# LOAD DATA
-# ============================================
+
 @st.cache_data
 def load_data():
     """Load all analysis results"""
@@ -58,9 +53,7 @@ def load_data():
 
 df, sov_df = load_data()
 
-# ============================================
-# SIDEBAR
-# ============================================
+
 st.sidebar.image("https://via.placeholder.com/200x80/FF6B6B/FFFFFF?text=Atomberg", use_container_width=True)
 st.sidebar.title("🔍 Analysis Filters")
 
@@ -94,9 +87,7 @@ st.sidebar.metric("Total Posts Analyzed", len(df))
 st.sidebar.metric("Brands Detected", len(sov_df))
 st.sidebar.metric("Platforms Covered", len(platforms))
 
-# ============================================
-# MAIN DASHBOARD
-# ============================================
+
 
 # Header
 st.markdown('<div class="main-header">🌀 Atomberg Share of Voice Analysis</div>', unsafe_allow_html=True)
@@ -139,9 +130,7 @@ with col4:
 
 st.markdown("---")
 
-# ============================================
-# VISUALIZATIONS
-# ============================================
+
 
 # Row 1: SoV Comparison
 st.subheader("📊 Share of Voice Comparison")
@@ -322,10 +311,7 @@ st.dataframe(
     use_container_width=True
 )
 
-# ============================================
-# EXPORT OPTIONS
-# ============================================
-st.sidebar.markdown("---")
+
 st.sidebar.markdown("### 💾 Export Options")
 
 if st.sidebar.button("📥 Download SoV Report (CSV)"):
@@ -345,3 +331,4 @@ st.markdown("""
     </div>
 
 """, unsafe_allow_html=True)
+
